@@ -232,7 +232,7 @@
   .begin-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,7vw,104px);align-items:start;text-align:left;}
   .form-row{display:grid;grid-template-columns:1fr 1fr;gap:26px;}
   .fld{display:flex;flex-direction:column;gap:9px;margin-bottom:26px;}
-  .fld label{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(244,243,238,.82);}
+  .fld label{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--paper);}
   .fld input,.fld textarea,.fld select{font-family:'Jost',sans-serif;font-size:15.5px;color:var(--paper);
         background:rgba(244,243,238,.045);border:0;border-bottom:1px solid rgba(244,243,238,.55);
         padding:11px 12px;outline:none;transition:border-color .25s,background .25s;border-radius:0;}
@@ -241,15 +241,15 @@
   .fld input:focus,.fld textarea:focus,.fld select:focus{border-bottom-color:rgba(244,243,238,.9);background:rgba(244,243,238,.085);}
   .fld select{appearance:none;-webkit-appearance:none;cursor:pointer;}
   .fld select option{background:#1A1A18;color:#F4F3EE;}
-  .form-note{margin-top:18px;font-family:'Jost',sans-serif;font-size:13.5px;line-height:1.65;color:rgba(244,243,238,.82);}
-  .sent{display:none;font-family:'Jost',sans-serif;font-size:14.5px;line-height:1.7;color:rgba(244,243,238,.9);}
+  .form-note{margin-top:18px;font-family:'Jost',sans-serif;font-size:13.5px;line-height:1.65;color:var(--paper);}
+  .sent{display:none;font-family:'Jost',sans-serif;font-size:14.5px;line-height:1.7;color:var(--paper);}
 
   /* close: the one dark block on the page */
   .close{position:relative;overflow:hidden;background:var(--ink);color:var(--paper);}
   .close .topo{filter:invert(1);opacity:.085;}
   .close h2{color:var(--paper);}
-  .close p{color:rgba(244,243,238,.9);}
-  .close .lbl{color:rgba(244,243,238,.75);}
+  .close p{color:var(--paper);}
+  .close .lbl{color:var(--paper);}
   .close .go{border:0;border-bottom:1px solid rgba(244,243,238,.85);color:var(--paper);}
   .close-in{position:relative;z-index:2;padding:clamp(94px,14vw,186px) 0;text-align:center;
             display:flex;flex-direction:column;align-items:center;gap:28px;}
@@ -259,15 +259,15 @@
   /* foot */
   .foot{background:var(--ink);color:var(--paper);}
   .foot .id .nm{color:var(--paper);}
-  .foot .id .sub{color:rgba(244,243,238,.7);}
+  .foot .id .sub{color:var(--paper);}
   .foot .id img{filter:invert(1);opacity:.9;}
   .foot-in{border-bottom:1px solid rgba(244,243,238,.1);}
   .foot-in{padding:58px 0 32px;display:flex;justify-content:space-between;gap:48px;flex-wrap:wrap;}
   .foot-cols{display:flex;gap:70px;flex-wrap:wrap;}
   .foot-col{display:flex;flex-direction:column;gap:9px;min-width:148px;}
-  .foot-col .h{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:rgba(244,243,238,.75);margin-bottom:6px;}
-  .foot-col a,.foot-col span{font-size:14px;color:rgba(244,243,238,.86);}
-  .foot-col a:hover{color:var(--paper);}
+  .foot-col .h{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--paper);margin-bottom:6px;}
+  .foot-col a,.foot-col span{font-size:14px;color:var(--paper);}
+  .foot-col a:hover{opacity:.72;}
   .foot-end{padding:18px 0 30px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;}
 
   @media (max-width:1020px){
@@ -467,7 +467,7 @@
         </figure>
         <figure>
           <div class="fbox"><svg class="crop-map" viewBox="430 390 470 392" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><use href="#co"/></svg></div>
-          <figcaption>Colorado &middot; elevation 2,400 to 4,100 m</figcaption>
+          <figcaption>Colorado &middot; elevation 7,900 to 13,400 ft</figcaption>
         </figure>
       </div>
     </div>
@@ -583,11 +583,11 @@
           <p style="margin-top:26px;max-width:42ch">Fifteen minutes on the phone. No paperwork, no obligation. If I&rsquo;m not the right fit, I&rsquo;ll say so and point you toward someone who is.</p>
           <div style="margin-top:38px;display:flex;flex-direction:column;align-items:flex-start;gap:22px">
             <a href="tel:7205711029" class="go">Call 720 571 1029</a>
-            <a href="mailto:jeremyreichert@gmail.com" class="lbl" style="color:rgba(244,243,238,.72);border-bottom:1px solid rgba(244,243,238,.55);padding-bottom:5px">jeremyreichert@gmail.com</a>
+            <a href="mailto:jeremyreichert@gmail.com" class="lbl" style="color:var(--paper);border-bottom:1px solid rgba(244,243,238,.55);padding-bottom:5px">jeremyreichert@gmail.com</a>
           </div>
         </div>
         <div>
-          <form id="enquiry" novalidate>
+          <form id="contactForm" novalidate>
             <div class="form-row">
               <div class="fld">
                 <label for="f-name">Name</label>
@@ -651,7 +651,7 @@
       </div>
     </div>
   </div>
-  <div class="wrap foot-end" style="--ink-3:rgba(244,243,238,.72)">
+  <div class="wrap foot-end" style="--ink-3:var(--paper)">
     <span class="lbl">© 2026 Apex Mental Health Counseling</span>
     <span class="lbl">Colorado</span>
   </div>
@@ -721,7 +721,7 @@
   });
 
   /* demo form */
-  var form = document.getElementById('enquiry');
+  var form = document.getElementById('contactForm');
   if(form) form.addEventListener('submit', function(e){
     e.preventDefault();
     form.querySelectorAll('.fld, button, .form-note').forEach(function(n){ n.style.display='none'; });
