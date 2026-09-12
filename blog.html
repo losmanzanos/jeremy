@@ -32,11 +32,16 @@
   img{max-width:100%;display:block;}
   a{color:inherit;text-decoration:none;}
   p{margin:0;}
+  figure{margin:0;}
   h1,h2,h3{margin:0;font-family:'Bodoni Moda',Didot,Georgia,serif;font-weight:400;}
   ::selection{background:var(--ink);color:var(--paper);}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important;}}
 
-  .wrap{width:100%;max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad);}
+  /* every gutter on the page comes from here. never set a `padding` shorthand
+     on an element that also carries .wrap, it wipes these two out. */
+  .wrap{width:100%;max-width:var(--max);margin:0 auto;
+        padding-left:max(var(--pad),env(safe-area-inset-left));
+        padding-right:max(var(--pad),env(safe-area-inset-right));}
   .lbl{font-family:'Jost',sans-serif;font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-3);}
 
   /* paper grain */
@@ -83,7 +88,7 @@
   .sheet a.lk{font-family:'Bodoni Moda',serif;font-size:clamp(30px,9vw,44px);padding:14px 0;border-bottom:1px solid var(--hair-2);}
 
   /* links, not buttons */
-  .go{display:inline-flex;align-items:baseline;gap:12px;font-size:11px;letter-spacing:.26em;
+  .go{position:relative;display:inline-flex;align-items:baseline;gap:12px;font-size:11px;letter-spacing:.26em;
       text-transform:uppercase;padding-bottom:9px;border-bottom:1px solid var(--ink);transition:gap .28s;}
   .go:hover{gap:20px;}
   .go-q{border-bottom-color:var(--hair);color:var(--ink-2);}
@@ -225,7 +230,7 @@
   .begin-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,7vw,104px);align-items:start;text-align:left;}
   .form-row{display:grid;grid-template-columns:1fr 1fr;gap:26px;}
   .fld{display:flex;flex-direction:column;gap:9px;margin-bottom:26px;}
-  .fld label{font-family:'Jost',sans-serif;font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(244,243,238,.5);}
+  .fld label{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--paper);}
   .fld input,.fld textarea,.fld select{font-family:'Jost',sans-serif;font-size:15px;color:var(--paper);
         background:transparent;border:0;border-bottom:1px solid rgba(244,243,238,.26);padding:8px 0;outline:none;
         transition:border-color .25s;border-radius:0;}
@@ -251,16 +256,18 @@
   /* foot */
   .foot{background:var(--ink);color:var(--paper);}
   .foot .id .nm{color:var(--paper);}
-  .foot .id .sub{color:rgba(244,243,238,.5);}
+  .foot .id .sub{color:var(--paper);}
   .foot .id img{filter:invert(1);opacity:.9;}
-  .foot-in{border-bottom:1px solid rgba(244,243,238,.1);}
-  .foot-in{padding:58px 0 32px;display:flex;justify-content:space-between;gap:48px;flex-wrap:wrap;}
+  .foot-in{border-bottom:1px solid rgba(244,243,238,.1);
+           padding-top:58px;padding-bottom:32px;
+           display:flex;justify-content:space-between;gap:48px;flex-wrap:wrap;}
   .foot-cols{display:flex;gap:70px;flex-wrap:wrap;}
   .foot-col{display:flex;flex-direction:column;gap:9px;min-width:148px;}
   .foot-col .h{font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(244,243,238,.45);margin-bottom:6px;}
   .foot-col a,.foot-col span{font-size:14px;color:rgba(244,243,238,.72);}
   .foot-col a:hover{color:var(--paper);}
-  .foot-end{padding:18px 0 30px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;}
+  .foot-end{padding-top:18px;padding-bottom:30px;
+            display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;}
 
   @media (max-width:1020px){
     .menu,.mast-tel{display:none;}
@@ -282,13 +289,42 @@
     .facts > div:nth-child(even){padding-left:0;}
     .facts > div{padding-right:0;}
   }
+  @media (hover:none),(max-width:1020px){
+    .go::before{content:"";position:absolute;inset:-13px -10px;}
+    .foot-col a,.sheet a.lk{position:relative;}
+  }
   @media (max-width:620px){
-    .mast-in{height:66px;}
+    :root{--pad:20px;}
+    .mast-in{height:64px;gap:14px;}
+    .id{gap:10px;}
+    .id img{height:23px;}
+    .id .nm{font-size:16px;letter-spacing:.3em;text-indent:.3em;}
+    .id .sub{font-size:8.5px;letter-spacing:.2em;text-indent:.2em;margin-top:5px;white-space:nowrap;}
+    .mast-r .go{display:none;}
+    .bgr{width:44px;height:44px;margin-right:-10px;}
+    .sheet{justify-content:flex-start;padding-top:calc(64px + 30px);padding-bottom:40px;overflow-y:auto;}
+    .sheet a.lk{font-size:clamp(28px,8.4vw,38px);padding:12px 0;}
     .form-row{grid-template-columns:1fr;gap:0;}
-    .hero{padding-top:116px;}
-    .hero-meta{flex-direction:column;gap:7px;}
-    .vword{font-size:34vw;opacity:.045;}
-    .topo-hero{width:250vw;}
+    .hero{min-height:0;padding-top:96px;padding-bottom:72px;}
+    .hero-meta{flex-direction:column;gap:7px;padding-bottom:16px;margin-bottom:28px;}
+    .hero h1{font-size:clamp(40px,11.4vw,56px);max-width:none;}
+    .hero-sub{margin-top:22px;font-size:16px;line-height:1.72;}
+    .vword{display:none;}
+    .topo-hero{width:230vw;opacity:.06;}
+    .sec{padding:68px 0;}
+    .lbl{font-size:11px;letter-spacing:.22em;}
+    h2{font-size:clamp(29px,8vw,38px);}
+    .foot-in{padding-top:44px;padding-bottom:28px;gap:34px;}
+    .foot-cols{display:grid;grid-template-columns:1fr 1fr;gap:28px 24px;}
+    .foot-col{min-width:0;}
+    .foot-col:first-child{grid-column:1 / -1;}
+    .foot-end{padding-top:16px;padding-bottom:26px;gap:6px;flex-direction:column;}
+  }
+  @media (max-width:380px){
+    :root{--pad:17px;}
+    .id .sub{font-size:8px;letter-spacing:.16em;}
+    .hero h1{font-size:38px;}
+    .foot-cols{grid-template-columns:1fr;gap:24px;}
   }
 </style>
 <body>
@@ -371,11 +407,11 @@
       </div>
       <div class="foot-col">
         <span class="h">Credentials</span>
-        <span>PhD &middot; LPC &middot; NCC</span>
+        <span>PhD &middot; LPC</span>
       </div>
     </div>
   </div>
-  <div class="wrap foot-end" style="--ink-3:rgba(244,243,238,.4)">
+  <div class="wrap foot-end" style="--ink-3:var(--paper)">
     <span class="lbl">&copy; 2026 Apex Mental Health Counseling</span>
     <span class="lbl">Colorado</span>
   </div>

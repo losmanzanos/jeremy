@@ -34,11 +34,16 @@
   img{max-width:100%;display:block;}
   a{color:inherit;text-decoration:none;}
   p{margin:0;}
+  figure{margin:0;}
   h1,h2,h3{margin:0;font-family:'Bodoni Moda',Didot,Georgia,serif;font-weight:400;}
   ::selection{background:var(--ink);color:var(--paper);}
   @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important;}}
 
-  .wrap{width:100%;max-width:var(--max);margin:0 auto;padding-left:var(--pad);padding-right:var(--pad);}
+  /* every gutter on the page comes from here. never set a `padding` shorthand
+     on an element that also carries .wrap, it wipes these two out. */
+  .wrap{width:100%;max-width:var(--max);margin:0 auto;
+        padding-left:max(var(--pad),env(safe-area-inset-left));
+        padding-right:max(var(--pad),env(safe-area-inset-right));}
   .lbl{font-family:'Jost',sans-serif;font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-3);}
 
   /* paper grain */
@@ -85,7 +90,7 @@
   .sheet a.lk{font-family:'Bodoni Moda',serif;font-size:clamp(30px,9vw,44px);padding:14px 0;border-bottom:1px solid var(--hair-2);}
 
   /* links, not buttons */
-  .go{display:inline-flex;align-items:baseline;gap:12px;font-size:11px;letter-spacing:.26em;
+  .go{position:relative;display:inline-flex;align-items:baseline;gap:12px;font-size:11px;letter-spacing:.26em;
       text-transform:uppercase;padding-bottom:9px;border:0;border-bottom:1px solid var(--ink);
       transition:gap .28s;background:none;color:inherit;}
   .go:hover{gap:20px;}
@@ -125,19 +130,17 @@
   .xh b{position:absolute;width:9px;height:9px;border:1px solid rgba(26,26,24,.75);border-radius:50%;
         transform:translate(-50%,-50%);background:rgba(244,243,238,.5);}
   .plate-read{font-variant-numeric:tabular-nums;}
-  /* the survey plate develops on load */
+  /* the survey plate develops on load. it is the only map in the hero:
+     the contour texture starts at "Why Apex", where the copy earns it. */
   @keyframes plateIn{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
   .plate-in .inner .crop-map{animation:plateIn 1.5s cubic-bezier(.22,.61,.36,1) .25s both;}
-  /* contours settle in */
-  @keyframes topoIn{from{opacity:0;transform:translate(-50%,-50%) scale(1.05)}}
-  .topo-hero{animation:topoIn 2.4s cubic-bezier(.22,.61,.36,1) both;}
   /* work rows */
   .item{transition:background .35s;}
   .item:hover{background:rgba(26,26,24,.018);}
   .item .n{transition:transform .35s,color .35s;}
   .item:hover .n{transform:translateX(4px);color:var(--ink);}
   @media (prefers-reduced-motion:reduce){
-    .plate-in .inner .crop-map,.topo-hero{animation:none;}
+    .plate-in .inner .crop-map{animation:none;}
   }
 
   /* ---------- sections ---------- */
@@ -168,7 +171,7 @@
 
   /* why apex */
   .why{position:relative;overflow:hidden;border-top:1px solid var(--hair-2);background:var(--sage);}
-  .why-in{position:relative;z-index:2;padding:clamp(94px,14vw,196px) 0;}
+  .why-in{position:relative;z-index:2;padding-top:clamp(78px,14vw,196px);padding-bottom:clamp(78px,14vw,196px);}
   .why-head{text-align:center;max-width:min(92%,880px);margin:0 auto;}
   .why-head h2{font-size:clamp(34px,6.4vw,88px);line-height:1.0;letter-spacing:-.026em;}
   .why-head h2 em{font-style:italic;}
@@ -244,6 +247,8 @@
   /* close: the one dark block on the page.
      every piece of text here is var(--paper) at full strength */
   .close{position:relative;overflow:hidden;background:var(--ink);color:var(--paper);}
+  /* longhands only. .close-in also carries .wrap, whose side padding is the gutter. */
+  .close-in{position:relative;z-index:2;padding-top:clamp(84px,12vw,150px);padding-bottom:clamp(84px,12vw,150px);}
   .close .topo{filter:invert(1);opacity:.085;}
   .close h2{color:var(--paper);max-width:13ch;}
   .close p{font-size:16.5px;line-height:1.8;color:var(--paper);}
@@ -259,14 +264,17 @@
   .foot .id .nm{color:var(--paper);}
   .foot .id .sub{color:var(--paper);}
   .foot .id img{filter:invert(1);opacity:.9;}
-  .foot-in{border-bottom:1px solid rgba(244,243,238,.1);}
-  .foot-in{padding:58px 0 32px;display:flex;justify-content:space-between;gap:48px;flex-wrap:wrap;}
+  .foot-in{border-bottom:1px solid rgba(244,243,238,.1);
+           padding-top:58px;padding-bottom:32px;
+           display:flex;justify-content:space-between;gap:48px;flex-wrap:wrap;}
   .foot-cols{display:flex;gap:70px;flex-wrap:wrap;}
   .foot-col{display:flex;flex-direction:column;gap:9px;min-width:148px;}
   .foot-col .h{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--paper);margin-bottom:6px;}
   .foot-col a,.foot-col span{font-size:14px;color:var(--paper);}
+  .foot-col a{padding:3px 0;}
   .foot-col a:hover{opacity:.72;}
-  .foot-end{padding:18px 0 30px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;}
+  .foot-end{padding-top:18px;padding-bottom:30px;
+            display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;}
 
   @media (max-width:1020px){
     .menu,.mast-tel{display:none;}
@@ -288,13 +296,81 @@
     .facts > div:nth-child(even){padding-left:0;}
     .facts > div{padding-right:0;}
   }
+  /* touch: grow the hit area without moving a single pixel */
+  @media (hover:none),(max-width:1020px){
+    .go::before{content:"";position:absolute;inset:-13px -10px;}
+    .foot-col a,.sheet a.lk{position:relative;}
+  }
+
   @media (max-width:620px){
-    .mast-in{height:66px;}
+    :root{--pad:20px;}
+    /* masthead: one line, one control */
+    .mast-in{height:64px;gap:14px;}
+    .id{gap:10px;}
+    .id img{height:23px;}
+    .id .nm{font-size:16px;letter-spacing:.3em;text-indent:.3em;}
+    .id .sub{font-size:8.5px;letter-spacing:.2em;text-indent:.2em;margin-top:5px;white-space:nowrap;}
+    .mast-r .go{display:none;}
+    .bgr{width:44px;height:44px;margin-right:-10px;}
+    .sheet{justify-content:flex-start;padding-top:calc(64px + 30px);padding-bottom:40px;overflow-y:auto;}
+    .sheet a.lk{font-size:clamp(28px,8.4vw,38px);padding:12px 0;}
+
+    /* hero: headline first, map second, both inside the gutter */
+    .hero{min-height:0;padding-top:96px;padding-bottom:72px;}
+    .hero-grid{gap:40px;}
+    .hero-meta{flex-direction:column;gap:7px;padding-bottom:16px;margin-bottom:28px;}
+    .hero h1{font-size:clamp(40px,11.4vw,56px);max-width:none;}
+    .hero-sub{margin-top:22px;font-size:16px;line-height:1.72;}
+    .hero-acts{margin-top:30px;gap:26px;}
+    .plate{width:100%;}
+    .plate .crop-map{aspect-ratio:1/.86;}
+    .plate-in{padding:10px;}
+    .vword{display:none;}
+
+    /* section rhythm: shorter, so the page is scrollable in a sitting */
+    .sec{padding:68px 0;}
+    .sec-top{flex-direction:column;align-items:flex-start;gap:6px;padding-bottom:16px;
+             margin-bottom:34px;}
+    .lbl{font-size:11px;letter-spacing:.22em;}
+    h2{font-size:clamp(29px,8vw,38px);}
+    .why-head h2{font-size:clamp(31px,8.8vw,44px);}
+    .why-cols{margin-top:40px;gap:20px;}
+    .pull{margin-top:54px;}
+    .pull p{font-size:clamp(25px,7.4vw,34px);}
+    .topo-why{opacity:.07;}
+    .close .topo{opacity:.07;}
+    .mk-img{width:min(74%,208px);}
+    .cmp figcaption{font-size:10.5px;letter-spacing:.2em;}
+    .item{grid-template-columns:30px 1fr;gap:12px;padding:24px 0;}
+    .item h3{font-size:20px;}
+    .item p{font-size:15px;margin-top:10px;}
+    .facts h3,.fld label,.foot-col .h,.cred dt{font-size:10.5px;letter-spacing:.2em;}
+    .cred dt{flex:0 0 44px;}
+    .close a.lbl{padding-top:7px;}
+    .facts p{font-size:16px;}
+    .faq summary{font-size:19px;padding-right:40px;}
+    .faq .ans{font-size:15.5px;padding-right:0;}
     .form-row{grid-template-columns:1fr;gap:0;}
-    .hero{padding-top:116px;}
-    .hero-meta{flex-direction:column;gap:7px;}
-    .vword{font-size:34vw;opacity:.045;}
-    .topo-hero{width:250vw;}
+    .portrait{max-width:none;}
+    /* the close block and the footer are one continuous dark field.
+       keep the seam between them from reading as dead space. */
+    .close-in{padding-top:72px;padding-bottom:52px;}
+    .begin-grid{gap:38px;}
+
+    /* footer */
+    .foot-in{padding-top:44px;padding-bottom:28px;gap:34px;}
+    .foot-cols{display:grid;grid-template-columns:1fr 1fr;gap:28px 24px;}
+    .foot-col{min-width:0;gap:5px;}
+    .foot-col a{padding:7px 0;}
+    .foot-col:first-child{grid-column:1 / -1;}
+    .foot-end{padding-top:16px;padding-bottom:26px;gap:6px;flex-direction:column;}
+  }
+
+  @media (max-width:380px){
+    :root{--pad:17px;}
+    .id .sub{font-size:8px;letter-spacing:.16em;}
+    .hero h1{font-size:38px;}
+    .foot-cols{grid-template-columns:1fr;gap:24px;}
   }
 </style>
 </head>
@@ -344,7 +420,6 @@
 
   <section class="hero">
     <div class="fields"><div class="fl"></div><div class="fr"></div></div>
-    <svg class="topo topo-hero" viewBox="0 0 1600 1178" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><use href="#co"/></svg>
     <span class="vword" aria-hidden="true">APEX</span>
     <div class="wrap">
       <div class="hero-grid">
@@ -418,7 +493,7 @@
     <div class="wrap">
       <div class="sec-top">
         <span class="lbl">III &middot; The Work</span>
-        <span class="lbl">Six places people begin</span>
+        <span class="lbl">Seven places people begin</span>
       </div>
       <h2 style="max-width:16ch;margin-bottom:clamp(40px,5vw,68px)">Most people arrive somewhere on this list.</h2>
       <div class="list">
@@ -573,7 +648,7 @@
 
   <section class="close" id="begin">
     <svg class="topo topo-end" viewBox="0 0 1600 1178" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><use href="#co"/></svg>
-    <div class="wrap" style="position:relative;z-index:2;padding-top:clamp(84px,12vw,150px);padding-bottom:clamp(84px,12vw,150px)">
+    <div class="wrap close-in">
       <div class="begin-grid">
         <div>
           <span class="lbl">VII &middot; Begin</span>
