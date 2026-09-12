@@ -21,6 +21,7 @@
     --hair-2:rgba(26,26,24,.075);
     --max:1300px;
     --pad:clamp(22px,5vw,78px);
+    --mast-h:78px;
   }
   *,*::before,*::after{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -63,7 +64,7 @@
   /* masthead */
   .mast{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(244,243,238,.88);
         backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--hair-2);}
-  .mast-in{display:flex;align-items:center;justify-content:space-between;gap:28px;height:78px;}
+  .mast-in{display:flex;align-items:center;justify-content:space-between;gap:28px;height:var(--mast-h);}
   .id{display:flex;align-items:center;gap:13px;}
   .id img{height:26px;width:auto;}
   .id .nm{font-family:'Bodoni Moda',serif;font-size:19px;letter-spacing:.34em;line-height:1;text-indent:.34em;display:block;}
@@ -82,8 +83,14 @@
   .bgr.on i{background:transparent;}
   .bgr.on i::before{top:0;transform:rotate(45deg);}
   .bgr.on i::after{top:0;transform:rotate(-45deg);}
+  /* the sheet is top-aligned and scrolls. centering it clipped the first link
+     off the top of the screen whenever the links were taller than the viewport. */
   .sheet{position:fixed;inset:0;z-index:49;background:var(--paper);display:flex;flex-direction:column;
-         justify-content:center;padding:30px var(--pad);opacity:0;pointer-events:none;transition:opacity .3s;}
+         justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;
+         padding-top:calc(var(--mast-h) + 26px);padding-bottom:40px;
+         padding-left:max(var(--pad),env(safe-area-inset-left));
+         padding-right:max(var(--pad),env(safe-area-inset-right));
+         opacity:0;pointer-events:none;transition:opacity .3s;}
   .sheet.on{opacity:1;pointer-events:auto;}
   .sheet a.lk{font-family:'Bodoni Moda',serif;font-size:clamp(30px,9vw,44px);padding:14px 0;border-bottom:1px solid var(--hair-2);}
 
@@ -272,9 +279,16 @@
   @media (max-width:1020px){
     .menu,.mast-tel{display:none;}
     .begin-grid{grid-template-columns:1fr;gap:46px;}
-    .bgr{display:flex;}
+    .bgr{display:flex;width:44px;height:44px;margin-right:-10px;}
+    .sheet a.lk{font-size:clamp(26px,4.4vw,38px);padding:clamp(9px,1.4vh,15px) 0;}
+    .sheet .go{font-size:11px;}
+    /* the hero stacks HERE, not at 620. everything keyed to the split field
+       has to come off at the same width or it lingers as leftovers. */
     .fields{grid-template-columns:1fr;}
     .fields .fr{display:none;}
+    .vword{display:none;}
+    .hero{min-height:0;padding-top:104px;padding-bottom:80px;}
+    .hero h1{max-width:none;}
     .hero-grid{grid-template-columns:1fr;gap:44px;}
     .plate{justify-self:start;width:min(100%,360px);}
     .mk{grid-template-columns:1fr;gap:42px;}
@@ -294,22 +308,18 @@
     .foot-col a,.sheet a.lk{position:relative;}
   }
   @media (max-width:620px){
-    :root{--pad:20px;}
-    .mast-in{height:64px;gap:14px;}
+    :root{--pad:20px;--mast-h:64px;}
+    .mast-in{gap:14px;}
     .id{gap:10px;}
     .id img{height:23px;}
     .id .nm{font-size:16px;letter-spacing:.3em;text-indent:.3em;}
     .id .sub{font-size:8.5px;letter-spacing:.2em;text-indent:.2em;margin-top:5px;white-space:nowrap;}
     .mast-r .go{display:none;}
-    .bgr{width:44px;height:44px;margin-right:-10px;}
-    .sheet{justify-content:flex-start;padding-top:calc(64px + 30px);padding-bottom:40px;overflow-y:auto;}
-    .sheet a.lk{font-size:clamp(28px,8.4vw,38px);padding:12px 0;}
     .form-row{grid-template-columns:1fr;gap:0;}
-    .hero{min-height:0;padding-top:96px;padding-bottom:72px;}
+    .hero{padding-top:92px;padding-bottom:68px;}
     .hero-meta{flex-direction:column;gap:7px;padding-bottom:16px;margin-bottom:28px;}
-    .hero h1{font-size:clamp(40px,11.4vw,56px);max-width:none;}
+    .hero h1{font-size:clamp(40px,11.4vw,56px);}
     .hero-sub{margin-top:22px;font-size:16px;line-height:1.72;}
-    .vword{display:none;}
     .topo-hero{width:230vw;opacity:.06;}
     .sec{padding:68px 0;}
     .lbl{font-size:11px;letter-spacing:.22em;}
